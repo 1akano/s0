@@ -7,7 +7,7 @@
     }
     a.onmessage = function(b) {
       b.data.text().then(function(c) {
-        document.title = c;
+        document.body.innerHTML = c.join(",");
       })
     }
     </script>
