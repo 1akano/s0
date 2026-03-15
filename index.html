@@ -1,6 +1,5 @@
 <html>
   <body>
-    <img id="i" style="width: 100%; height: 100%">
     <script>
     var a = new WebSocket("wss://s0.onrender.com/");
     a.onopen = function() {
@@ -8,7 +7,7 @@
     }
     a.onmessage = function(b) {
       b.data.text().then(function(c) {
-        i.src = URL.createObjectURL(new Blob([new Uint8Array(c.split(","))], { type: 'image/png' }));
+        document.title = c;
       })
     }
     </script>
