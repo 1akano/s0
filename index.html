@@ -9,7 +9,7 @@
     a.onmessage = function(b) {
       b.data.text().then(function(c) {
         i.src = URL.createObjectURL(new Blob([new Uint8Array(c.split(","))], { type: 'image/png' }));
-      }
+      })
     }
     </script>
   </body>
