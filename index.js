@@ -1,6 +1,7 @@
-var a = new require("ws").Server({ port: 8080 });
-a.on("connection", b => {
-    b.on("message", c => {
-        b.send(c);
+var a = require('ws');
+var b = new a.Server({ port: 8080 });
+b.on('connection', (c) => {
+    c.on('message', (d) => {
+        c.send(d);
     });
 });
