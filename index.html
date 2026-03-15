@@ -2,12 +2,9 @@
   <body>
     <script>
     var a = new WebSocket("wss://s0.onrender.com/");
-    a.onopen = function() {
-      window.s = a.send;
-    }
     a.onmessage = function(b) {
       b.data.text().then(function(c) {
-        document.body.innerHTML = c.join(",");
+        document.body.innerHTML = c;
       })
     }
     </script>
