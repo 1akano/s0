@@ -3,7 +3,7 @@
     <script>
     var a = new WebSocket("wss://s0.onrender.com/");
     a.onmessage = async (b) => {
-      var c = async b.data.text();
+      var c = await b.data.text();
       if (document.body.innerText == "0") {
         document.title = c;
       }
