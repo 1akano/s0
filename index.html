@@ -1,12 +1,56 @@
-<html>
-  <body>
-    <script>
-    var a = new WebSocket("wss://s0.onrender.com/");
-    a.onmessage = function(b) {
-      b.data.text().then(function(c) {
-        document.body.innerHTML = c;
-      })
+using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+
+namespace Program
+{
+    class Program
+    {
+        [STAThread]
+        static void Main()
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("                                                                             ▄ ▄");
+            Console.WriteLine("▄▄ ▄▄ ▄▄ ▄▄  ▄▄ ▄▄▄▄  ▄▄▄▄▄ ▄▄▄▄  ▄▄▄▄▄▄ ▄▄▄   ▄▄▄▄ ▄▄▄▄▄  ▄▄▄▄  ▄▄▄▄ ▄▄▄▄▄▄ ▄▄▄ ▄▄▄▄▄▄ ▄▄▄▄▄▄ ▄▄▄▄▄");
+            Console.WriteLine("██▄█▀ ██ ███▄██ ██▀██ ██▄▄  ██▄█▄   ██  ██▀██ ██ ▄▄ ██▄▄  ███▄▄ ███▄▄   ██  ██▀██  ██     ██   ██▄▄ ");
+            Console.WriteLine("██ ██ ██ ██ ▀██ ████▀ ██▄▄▄ ██ ██   ██  ██▀██ ▀███▀ ██▄▄▄ ▄▄██▀ ▄▄██▀   ██  ██▀██  ██     ██   ██▄▄▄");
+            Console.WriteLine("");
+            Console.Write("Eingabedatei : ");
+            Console.ForegroundColor = ConsoleColor.White;
+            string file = Console.ReadLine();
+            using (FileStream filestream = new FileStream(file, FileMode.Open))
+            {
+                if (filestream.Length <= int.MaxValue)
+                {
+                    var size = (int)Math.Ceiling(Math.Sqrt(filestream.Length / 8));
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.Write("Kindergewicht: ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine(filestream.Length);
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.Write("Kinderabhängigkeit: ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine(size);
+                    byte[] bytes = new byte[filestream.Length];
+                    filestream.Read(bytes, 0, bytes.Length);
+                    Bitmap bitmap = new Bitmap(size, size, PixelFormat.Format64bppArgb);
+                    BitmapData bitmapData = bitmap.LockBits(new Rectangle(0, 0, size, size), ImageLockMode.WriteOnly, bitmap.PixelFormat);
+                    Marshal.Copy(bytes, 0, bitmapData.Scan0, bytes.Length);
+                    bitmap.UnlockBits(bitmapData);
+                    bitmap.Save("Ausgabe.dat", ImageFormat.Jpeg);
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.Write("[ERFOLG] ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("Kinder erfolgreich gespeichert.");
+                }
+                else
+                {
+                    Console.WriteLine("Dosya çok büyük.");
+                }
+            }
+        }
     }
-    </script>
-  </body>
-</html>
+}
